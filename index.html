@@ -995,8 +995,7 @@
         Whether you're a collector, a gallery, a journalist, or simply someone who'd like to know more about Noel's work — we'd love to hear from you.
       </p>
 
-      <form class="contact-form" name="contact" netlify onsubmit="handleSubmit(event)">
-        <input type="hidden" name="form-name" value="contact" />
+      <form class="contact-form" name="contact" data-netlify="true" action="/#contact" method="POST">
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="Full name" required />
@@ -1093,34 +1092,7 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // Contact form
-    function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn  = form.querySelector('.form-submit');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
-      })
-      .then(() => {
-        btn.textContent = 'Message Sent ✓';
-        btn.style.background = '#6a8b6a';
-        setTimeout(() => {
-          btn.textContent = 'Send Message';
-          btn.style.background = '';
-          btn.disabled = false;
-          form.reset();
-        }, 4000);
-      })
-      .catch(() => {
-        btn.textContent = 'Something went wrong — please try again';
-        btn.disabled = false;
-      });
-    }
+    // Contact form — handled natively by Netlify Forms
 
     // Smooth scroll for nav links (close mobile menu)
     document.querySelectorAll('a[href^="#"]').forEach(a => {
